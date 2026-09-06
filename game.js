@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+const THREE = window.THREE;
 
 const $ = id => document.getElementById(id);
 const clamp = (v,a,b)=>v<a?a:v>b?b:v;
@@ -290,7 +290,7 @@ for(const c of CORR){ WALL.push({x0:-c.x-2,x1:-c.x,y0:c.y0,y1:c.y1},{x0:c.x,x1:c
 const ENEMIES=[];
 { let flip=0;
   for(const p of PLAT){
-    if(p.top<10||p.top>114||p.move)continue;
+    if(p.top<13||p.top>114||p.move)continue;
     if(p.w<4.5&&LR()<0.5)continue;
     if(LR()<0.55){
       const tur=(flip++%3===2);
@@ -638,7 +638,7 @@ function updateEnemy(e,dt,plat){
     const dx=P.x-e.x,dy=P.y-e.y,d=Math.hypot(dx,dy);
     e.aim=Math.atan2(dy,dx); e.fAim=dx>=0?1:-1;
     if(e.recoil>0)e.recoil-=dt;
-    if(d<21&&!P.dead){
+    if(d<21&&Math.abs(P.y-e.y)<12&&!P.dead){
       e.cd-=dt;
       if(e.cd<=0){
         e.cd=1.4+LR()*1.4; e.recoil=0.12;
